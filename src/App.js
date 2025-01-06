@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AddTodo from './components/AddTodo';
 import TodoList from './components/TodoList';
 import './App.css';
@@ -6,7 +6,18 @@ import './App.css';
 function App() {
     const [todos, setTodos] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
+    useEffect(()=>{
+      const savedMode = localStorage.getItem('darkMode');
+      if(savedMode === 'true'){
+        setIsDarkMode(true);
+      }
+    }, [])
+    const toggleDarkMode = () => {
+      setIsDarkMode(!isDarkMode);
+      localStorage.setItem('darkMode', !isDarkMode)
+    }
 
     const addTodo = (todo, label, dueDate) => {
         setTodos([...todos, { id: Date.now(), todo, isDone: false, label, dueDate }]);
@@ -34,7 +45,12 @@ function App() {
   });
     
     return (
-        <div className="app">
+        <div className={isDarkMode ? "app dark" : "app"}>
+          <button
+            onClick={toggleDarkMode} className='dark-mode-toggle'
+            >
+              {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            </button>
             <h1>To-Do Application</h1>
             <input
             style={{marginBottom: "40px"}}
