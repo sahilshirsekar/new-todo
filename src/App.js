@@ -43,6 +43,18 @@ function App() {
           (todo.dueDate && todo.dueDate.includes(searchQuery))
       );
   });
+
+  const calculateRemainingTime = (dueDate) => {
+    const currentDate = new Date();
+    const timeRemaining = new Date(dueDate) - currentDate;
+
+    if (timeRemaining <= 0) return 'Due';
+
+    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+    return `${days}d ${hours}h ${minutes}m`;
+};
     
     return (
         <div className={isDarkMode ? "app dark" : "app"}>
@@ -53,14 +65,18 @@ function App() {
             </button>
             <h1>To-Do Application</h1>
             <input
-            style={{marginBottom: "40px"}}
+            style={{marginBottom: "40px",
+              backgroundColor: 'lightgray',
+              width:"96%"
+            }}
             type="text"
             placeholder="Search tasks..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
         />
             <AddTodo addTodo={addTodo} />
-            <TodoList todos={filteredTodos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} editTodo={editTodo} />
+            <TodoList todos={filteredTodos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} editTodo={editTodo} 
+            calculateRemainingTime={calculateRemainingTime}/>
         </div>
     );
 }

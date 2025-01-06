@@ -12,6 +12,28 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Remove outline for select element when focused */
+select:focus {
+  outline: none;
+  border-color: #4299e1;  /* Optional custom border color on focus */
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15); /* Optional box shadow */
+}
+
+/* Remove outline completely for select element */
+select {
+  outline: none;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.todo-item select{
+  margin-left: 30px;
+}
+
+
 .app {
   max-width: 1000px;
   width: 100%;
@@ -63,8 +85,7 @@ button.dark-mode-toggle {
   border: none;
   cursor: pointer;
   font-size: 16px;
-  margin-bottom: 20px ;
-  margin-left:550px;
+  margin: 0px 0px 20px 550px;
   border-radius: 8px;
   display: flex;
 }
@@ -79,7 +100,6 @@ button.dark-mode-toggle:hover {
   margin-bottom: 25px;
   gap: 12px;
 }
-
 .add-todo input,
 .add-todo select {
   flex: 1;
@@ -129,17 +149,36 @@ button.dark-mode-toggle:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   padding: 16px;
   background-color: #f8fafc;
   border-radius: 8px;
   margin-bottom: 10px;
   transition: all 0.2s ease;
+
+
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+  
 }
+
+
 
 .todo-item:hover {
   background-color: #edf2f7;
   transform: translateX(4px);
+  cursor: pointer;
 }
+
+.todo-item button:hover{
+  background-color: red;
+  color: darkred;
+}
+
 
 /* Todo Item Text (done state) */
 .todo-item.done span {
@@ -150,7 +189,7 @@ button.dark-mode-toggle:hover {
 .todo-item.done span:hover {
   text-decoration: line-through;
   color: #a0aec0;
-  cursor: pointer;
+
 }
 
 .todo-item button {
@@ -167,7 +206,17 @@ button.dark-mode-toggle:hover {
   background-color: #fff5f5;
   color: #e53e3e;
   transform: scale(1.1);
+  cursor: pointer;
 }
+
+.todo-item .due-date {
+  font-size: 0.9rem;
+  color: #ff6347; /* You can use any color here */
+  font-weight: bold;
+  margin-left: 15px;
+}
+
+
 
 /* Media Query for Small Screens */
 @media (max-width: 480px) {

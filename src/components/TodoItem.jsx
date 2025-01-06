@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function TodoItem({ todo, toggleTodo, deleteTodo, editTodo}) {
+function TodoItem({ todo, toggleTodo, deleteTodo, editTodo, calculateRemainingTime}) {
   const [isEditing, setIsEditing] = useState(false);
   const [newTask, setNewTask] = useState(todo.todo);
   const [newLabel, setNewLabel] = useState(todo.label);
@@ -30,17 +30,17 @@ function TodoItem({ todo, toggleTodo, deleteTodo, editTodo}) {
               onChange={(e) => {
                 setNewLabel(e.target.value)
               }}>
-                <option value="Work">Work</option>
-                <option value="Personal">Personal</option>
-                <option value="Urgent">Urgent</option>
-                <option value="Important">Important</option>
+                <option  className='option' value="Work">Work</option>
+                <option className='option' value="Personal">Personal</option>
+                <option className='option' value="Urgent">Urgent</option>
+                <option className='option' value="Important">Important</option>
               </select>
               <input
               type='date'
               value={newDueDate}
               onChange={(e) => {setNewDueDate(e.target.value)}}
               ></input>
-              <button style={{padding: "0px 0px 0px 80px"}} type='submit'>Save</button>
+              <button style={{margin: "0px 0px 0px 200px"}} type='submit'>Save</button>
 
             </form>) : (
               <>
@@ -49,6 +49,11 @@ function TodoItem({ todo, toggleTodo, deleteTodo, editTodo}) {
           </span>
           <span className='badge bg-secondary '>{todo.label}</span>
           <span className="due-date text-right">{todo.dueDate ? `Due: ${todo.dueDate}` : ""}</span>
+          {todo.dueDate && (
+            <span className="due-date text-right">
+              Due in: {calculateRemainingTime(todo.dueDate)}
+            </span>
+          )}
           <button onClick={() => deleteTodo(todo.id)}>🗑️</button>
           <button onClick={() => setIsEditing(true)}>✏️</button>
           </>
